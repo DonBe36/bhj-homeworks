@@ -1,27 +1,28 @@
-const slides = document.querySelectorAll('.slider__item');
-const right = document.querySelector('.slider__arrow_next');
-const left = document.querySelector('.slider__arrow_prev')
+const switchLeft = document.querySelector(".slider__arrow_prev");
+const switchRight = document.querySelector(".slider__arrow_next");
 
-let slideInd = 0;
+let sliderPosition = 1;
 
-right.onclick = function () {
-	slideInd++;
-	for (let item of Array.from(slides)) {
-		item.className = 'slider__item';
-	};
-	if (slideInd >= slides.length) {
-		slideInd = 0;
-	};
-	slides[slideInd].className = 'slider__item slider__item_active';
-};
+switchRight.addEventListener('click', () => {
+  plusSlides(1);
+});
 
-left.onclick = function () {
-	slideInd--;
-	for (let item of Array.from(slides)) {
-		item.className = 'slider__item';
-	};
-	if (slideInd < 0) {
-		slideInd = slides.length - 1;
-	};
-	slides[slideInd].className = 'slider__item slider__item_active';
-};
+switchLeft.addEventListener('click', () => {
+  plusSlides(-1);
+});
+
+showSlides(sliderPosition);
+
+function plusSlides(n) {
+  showSlides(sliderPosition += n);
+}
+
+function showSlides(n) {
+  const slides = document.querySelectorAll(".slider__item");
+  if (n > slides.length) sliderPosition = 1;
+  if (n < 1) sliderPosition = slides.length;
+  for (let i = 0; i < slides.length; i++) {
+      slides[i].classList.remove('slider__item_active');
+  }
+  slides[sliderPosition-1].classList.add('slider__item_active');
+}
