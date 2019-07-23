@@ -1,15 +1,16 @@
-let cur = 1;
-const cases = document.querySelectorAll('.rotator__case');
+const rotatorCase = document.querySelectorAll(".rotator__case");
+let Counter = 0;
 
-const show = function(cases) {
-    setInterval(() => {
-        for(let i = 0; i < cases.length; i++) {
-            for(let j = 0; j < cases.length; j++) {
-                cases[j].classList.remove('rotator__case_active');
-			}
-			cases[cur].classList.add('rotator__case_active');			
-		}
-		cur++;
-	}, 1000);
-}
-show(cases);
+function selectorRotator() {
+		let presentValueRotator = rotatorCase[Counter];
+		presentValueRotator.classList.remove("rotator__case_active");
+		if (Counter === rotatorCase.length - 1) {
+			Counter = 0;
+		} else {
+			Counter++;
+		};
+		presentValueRotator = rotatorCase[Counter];
+		presentValueRotator.classList.add("rotator__case_active");
+};
+
+setInterval(selectorRotator, 1000);
