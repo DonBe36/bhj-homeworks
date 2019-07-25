@@ -1,38 +1,31 @@
-const taskList = document.querySelector('.tasks__list');
-const button = document.querySelector('.tasks__add');
-const input = document.querySelector('.tasks__input');
+const input = document.getElementById('task__input');
+const add = document.getElementById('tasks__add');
+const tasks = document.getElementById('tasks');
+const remove = document.querySelector('task__remove');
 
-button.addEventListener('click', addTask);
+const addTask = function() {
+    tasks.insertAdjacentHTML('beforeEnd',
+    `<div class="task">
+        <div class="task__title">${input.value}</div>
+        <a href="#" class="task__remove">&times;</a>
+    </div>`);
+    input.value = null;
+}
 
-function addTask(event) {
-	event.preventDefault();
-	const value = input.value;
-	if(value != '') {
-		item(value);
-		input.value = '';
-	};
-	deleteTask();
-};
+add.addEventListener('click', (event) => {
+  event.preventDefault();
+  addTask();
+});
 
+input.addEventListener('keypress', (event) => {
+    if (event.keyCode == 13) {
+        event.preventDefault();
+        addTask();
+    }
+});
 
-function deleteTask(){
-	const pressDelete = document.querySelectorAll('.task__remove');
-	for(let item of pressDelete) {
-		item.addEventListener('click', (event) => {
-			event.preventDefault();
-			const parent = event.target.parentNode;
-			parent.style.display = 'none';
-		});
-	};
-};
-
-function item(text) {
-	taskList.innerHTML += `<div class="task">
-				              <div class="task__title">
-				                ${text}
-				              </div>
-				              <a href="#" class="task__remove">&times;</a>
-				            </div>`;
-
-	deleteTask();
-};
+onclick = (event) => {
+    if (event.target.classList.contains('task__remove')) {
+        event.target.parentElement.remove();
+    }
+}
